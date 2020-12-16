@@ -3,6 +3,7 @@ author: wuaho
 email: 15392746632@qq.com
 data:2019-11-14
 """
+import sys
 import base64
 import json
 import os
@@ -62,7 +63,8 @@ class VideoParse:
                 print(content_dict.get('message'))
                 return ''
         else:
-            main_url = content_dict['data']['video_list']['video_1']['main_url']
+            length = len(content_dict['data']['video_list'])
+            main_url = content_dict['data']['video_list']['video_{}'.format(length)]['main_url']
             video_url = base64.b64decode(main_url).decode()
             return video_url
 
@@ -90,8 +92,11 @@ def download_file(name, url):
 
 
 if __name__ == '__main__':
-    print('直接回车测试 https://www.ixigua.com/i6704446868685849092')
-    source_url = input('输入西瓜链接：')
+    if len(sys.argv) >= 2:
+        source_url = sys.argv[1]
+    else:
+        print('直接回车测试 https://www.ixigua.com/i6704446868685849092')
+        source_url = input('输入西瓜链接：')
     if not source_url:
         source_url = 'https://www.ixigua.com/i6704446868685849092'
     video_name = urllib.parse.urlparse(source_url).path.strip('/') + '.mp4'
