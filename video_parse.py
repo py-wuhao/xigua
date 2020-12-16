@@ -62,7 +62,8 @@ class VideoParse:
                 print(content_dict.get('message'))
                 return ''
         else:
-            main_url = content_dict['data']['video_list']['video_1']['main_url']
+            length = len(content_dict['data']['video_list'])
+            main_url = content_dict['data']['video_list']['video_{}'.format(length)]['main_url']
             video_url = base64.b64decode(main_url).decode()
             return video_url
 
